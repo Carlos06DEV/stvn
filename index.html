@@ -1,130 +1,129 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player de Vídeo</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #121212;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        .player-container {
-            text-align: center;
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-        }
-        video {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 10px;
-        }
-        .controls {
-            margin-top: 10px;
-        }
-        button, select {
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px;
-            margin: 5px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        button:hover, select:hover {
-            background-color: #555;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Player de Vídeo</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .player-container {
+      text-align: center;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      width: 90%;
+      max-width: 650px;
+    }
+    video {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .controls {
+      margin-top: 10px;
+    }
+    button, select {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover, select:hover {
+      background-color: #555;
+    }
+  </style>
 </head>
 <body>
-    <div class="player-container">
-        <h2>Meu Player de Vídeo</h2>
-        <h3 id="video-title">Ep 1</h3>
-        
-        <video id="video" controls>
-            <source id="video-source" src="" type="video/mp4">
-            Seu navegador não suporta a reprodução de vídeos.
-        </video>
-        
-        <div class="controls">
-            <button onclick="previousVideo()">Anterior</button>
-            <button onclick="toggleFullscreen()">Tela cheia</button>
-            <button onclick="nextVideo()">Próximo</button>
-            <select id="episode-select" onchange="selectVideo()">
-                <!-- opções serão adicionadas via JS -->
-            </select>
-        </div>
+  <div class="player-container">
+    <h2>Meu Player de Vídeo</h2>
+    <h3 id="video-title">Ep 1</h3>
+    
+    <video id="video" controls muted autoplay>
+      <source id="video-source" src="" type="video/mp4" />
+      Seu navegador não suporta a reprodução de vídeos.
+    </video>
+
+    <div class="controls">
+      <button onclick="previousVideo()">Anterior</button>
+      <button onclick="toggleFullscreen()">Tela cheia</button>
+      <button onclick="nextVideo()">Próximo</button>
     </div>
 
-    <script>
-        const video = document.getElementById("video");
-        const videoSource = document.getElementById("video-source");
-        const videoTitle = document.getElementById("video-title");
-        const episodeSelect = document.getElementById("episode-select");
+    <div class="controls">
+      <label for="episodeSelect">Escolher episódio:</label>
+      <select id="episodeSelect" onchange="selectEpisode(this.value)"></select>
+    </div>
+  </div>
 
-        // URL do servidor Flask via Ngrok
-        const serverUrl = "https://8467-177-115-21-141.ngrok-free.app/videos/";
+  <script>
+    const video = document.getElementById("video");
+    const videoSource = document.getElementById("video-source");
+    const videoTitle = document.getElementById("video-title");
+    const episodeSelect = document.getElementById("episodeSelect");
 
-        const playlist = Array.from({ length: 24 }, (_, i) => ({
-            src: `${i + 1}.mp4`,
-            title: `Ep ${i + 1}`
-        }));
+    const serverUrl = "https://8467-177-115-21-141.ngrok-free.app/videos/";
 
-        let currentIndex = 0;
+    const playlist = Array.from({ length: 24 }, (_, i) => ({
+      src: `${i + 1}.mp4`,
+      title: `Ep ${i + 1}`
+    }));
 
-        function loadVideo(index) {
-            const videoUrl = serverUrl + playlist[index].src;
-            videoSource.src = videoUrl;
-            videoTitle.textContent = playlist[index].title;
-            episodeSelect.value = index;
-            video.load(); // apenas carrega, não toca automaticamente
-        }
+    let currentIndex = 0;
 
-        function nextVideo() {
-            currentIndex = (currentIndex + 1) % playlist.length;
-            loadVideo(currentIndex);
-            video.play();
-        }
+    function loadVideo(index) {
+      const videoUrl = serverUrl + playlist[index].src;
+      videoSource.src = videoUrl;
+      videoTitle.textContent = playlist[index].title;
+      episodeSelect.value = index;
+      video.load(); // autoplay será automático porque está muted
+    }
 
-        function previousVideo() {
-            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-            loadVideo(currentIndex);
-            video.play();
-        }
+    function nextVideo() {
+      currentIndex = (currentIndex + 1) % playlist.length;
+      loadVideo(currentIndex);
+    }
 
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                video.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-        }
+    function previousVideo() {
+      currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+      loadVideo(currentIndex);
+    }
 
-        function selectVideo() {
-            currentIndex = parseInt(episodeSelect.value);
-            loadVideo(currentIndex);
-            video.play();
-        }
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        video.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
 
-        // Preenche o select com os episódios
-        function populateSelect() {
-            playlist.forEach((item, index) => {
-                const option = document.createElement("option");
-                option.value = index;
-                option.textContent = item.title;
-                episodeSelect.appendChild(option);
-            });
-        }
+    function selectEpisode(index) {
+      currentIndex = parseInt(index);
+      loadVideo(currentIndex);
+    }
 
-        populateSelect();
-        loadVideo(currentIndex); // apenas carrega o vídeo, não reproduz
-    </script>
+    // Preenche o select com episódios
+    playlist.forEach((ep, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent = ep.title;
+      episodeSelect.appendChild(option);
+    });
+
+    // Carrega o primeiro vídeo
+    loadVideo(currentIndex);
+  </script>
 </body>
 </html>
