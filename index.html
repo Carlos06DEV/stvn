@@ -48,7 +48,7 @@
         <h2>Meu Player de Vídeo</h2>
         <h3 id="video-title">Vídeo 1</h3>
         <video id="video" controls>
-            <source src="https://8467-177-115-21-141.ngrok-free.app/1.mp4" type="video/mp4">
+            <source src="https://8467-177-115-21-141.ngrok-free.app/videos/1.mp4" type="video/mp4">
             Seu navegador não suporta a reprodução de vídeos.
         </video>
         <div class="controls">
@@ -62,7 +62,7 @@
         const video = document.getElementById("video");
         const videoTitle = document.getElementById("video-title");
 
-        // URL do servidor Flask
+        // URL do servidor Flask (HTTPS via Ngrok)
         const serverUrl = "https://8467-177-115-21-141.ngrok-free.app/videos/";
 
         const playlist = [
@@ -75,15 +75,7 @@
             { src: serverUrl + "7.mp4", title: "Ep 7" },
             { src: serverUrl + "8.mp4", title: "Ep 8" },
             { src: serverUrl + "9.mp4", title: "Ep 9" },
-            { src: serverUrl + "10.mp4", title: "Ep 10" },
-            { src: serverUrl + "11.mp4", title: "Ep 11" },
-            { src: serverUrl + "12.mp4", title: "Ep 12" },
-            { src: serverUrl + "13.mp4", title: "Ep 13" },
-            { src: serverUrl + "14.mp4", title: "Ep 14" },
-            { src: serverUrl + "15.mp4", title: "Ep 15" },
-            { src: serverUrl + "16.mp4", title: "Ep 16" },
-            { src: serverUrl + "17.mp4", title: "Ep 17" },
-            { src: serverUrl + "18.mp4", title: "Ep 18" }
+            { src: serverUrl + "10.mp4", title: "Ep 10" }
         ];
         
         let currentIndex = 0;
