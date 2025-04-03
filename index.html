@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player de Vídeo</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .player-container {
+            text-align: center;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        video {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <h2>Meu Player de Vídeo</h2>
+        <h3 id="video-title">Vídeo 1</h3>
+        <video id="video" controls>
+            <source src="http://192.168.15.37:5000/videos/1.mp4" type="video/mp4">
+            Seu navegador não suporta a reprodução de vídeos.
+        </video>
+        <div class="controls">
+            <button onclick="previousVideo()">Anterior</button>
+            <button onclick="toggleFullscreen()">Tela cheia</button>
+            <button onclick="nextVideo()">Próximo</button>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById("video");
+        const videoTitle = document.getElementById("video-title");
+
+        // URL do servidor Flask
+        const serverUrl = "http://192.168.15.37:5000/videos/";
+
+        const playlist = [
+            { src: serverUrl + "1.mp4", title: "Ep 1" },
+            { src: serverUrl + "2.mp4", title: "Ep 2" },
+            { src: serverUrl + "3.mp4", title: "Ep 3" },
+            { src: serverUrl + "4.mp4", title: "Ep 4" },
+            { src: serverUrl + "5.mp4", title: "Ep 5" },
+            { src: serverUrl + "6.mp4", title: "Ep 6" },
+            { src: serverUrl + "7.mp4", title: "Ep 7" },
+            { src: serverUrl + "8.mp4", title: "Ep 8" },
+            { src: serverUrl + "9.mp4", title: "Ep 9" },
+            { src: serverUrl + "10.mp4", title: "Ep 10" },
+            { src: serverUrl + "11.mp4", title: "Ep 11" },
+            { src: serverUrl + "12.mp4", title: "Ep 12" },
+            { src: serverUrl + "13.mp4", title: "Ep 13" },
+            { src: serverUrl + "14.mp4", title: "Ep 14" },
+            { src: serverUrl + "15.mp4", title: "Ep 15" },
+            { src: serverUrl + "16.mp4", title: "Ep 16" },
+            { src: serverUrl + "17.mp4", title: "Ep 17" },
+            { src: serverUrl + "18.mp4", title: "Ep 18" }
+        ];
+        
+        let currentIndex = 0;
+
+        function loadVideo(index) {
+            video.src = playlist[index].src;
+            videoTitle.textContent = playlist[index].title;
+            video.play();
+        }
+
+        function nextVideo() {
+            currentIndex = (currentIndex + 1) % playlist.length;
+            loadVideo(currentIndex);
+        }
+
+        function previousVideo() {
+            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+            loadVideo(currentIndex);
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                video.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    </script>
+</body>
+</html>
