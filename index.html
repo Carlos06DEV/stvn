@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player de Vídeo</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .player-container {
+            text-align: center;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        video {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        button, select {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover, select:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <h2>Meu Player de Vídeo</h2>
+        <h3 id="video-title">Ep 1</h3>
+        
+        <video id="video" controls>
+            <source id="video-source" src="" type="video/mp4">
+            Seu navegador não suporta a reprodução de vídeos.
+        </video>
+        
+        <div class="controls">
+            <button onclick="previousVideo()">Anterior</button>
+            <button onclick="toggleFullscreen()">Tela cheia</button>
+            <button onclick="nextVideo()">Próximo</button>
+            <select id="episode-select" onchange="selectVideo()">
+                <!-- opções serão adicionadas via JS -->
+            </select>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById("video");
+        const videoSource = document.getElementById("video-source");
+        const videoTitle = document.getElementById("video-title");
+        const episodeSelect = document.getElementById("episode-select");
+
+        // URL do servidor Flask via Ngrok
+        const serverUrl = "https://0797-177-115-21-141.ngrok-free.app/videos/";
+
+        const playlist = Array.from({ length: 26 }, (_, i) => ({
+            src: `${i + 1}.mp4`,
+            title: `Ep ${i + 1}`
+        }));
+
+        let currentIndex = 0;
+
+        function loadVideo(index) {
+            const videoUrl = serverUrl + playlist[index].src;
+            videoSource.src = videoUrl;
+            videoTitle.textContent = playlist[index].title;
+            episodeSelect.value = index;
+            video.load(); // apenas carrega, não toca automaticamente
+        }
+
+        function nextVideo() {
+            currentIndex = (currentIndex + 1) % playlist.length;
+            loadVideo(currentIndex);
+            video.play();
+        }
+
+        function previousVideo() {
+            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+            loadVideo(currentIndex);
+            video.play();
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                video.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function selectVideo() {
+            currentIndex = parseInt(episodeSelect.value);
+            loadVideo(currentIndex);
+            video.play();
+        }
+
+        // Preenche o select com os episódios
+        function populateSelect() {
+            playlist.forEach((item, index) => {
+                const option = document.createElement("option");
+                option.value = index;
+                option.textContent = item.title;
+                episodeSelect.appendChild(option);
+            });
+        }
+
+        populateSelect();
+        loadVideo(currentIndex); // apenas carrega o vídeo, não reproduz
+    </script>
+</body>
+</html>
