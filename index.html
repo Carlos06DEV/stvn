@@ -57,9 +57,7 @@
             <button onclick="previousVideo()">Anterior</button>
             <button onclick="toggleFullscreen()">Tela cheia</button>
             <button onclick="nextVideo()">Próximo</button>
-            <select id="episode-select" onchange="selectVideo()">
-                <!-- opções serão adicionadas via JS -->
-            </select>
+            <select id="episode-select" onchange="selectVideo()"></select>
         </div>
     </div>
 
@@ -69,10 +67,10 @@
         const videoTitle = document.getElementById("video-title");
         const episodeSelect = document.getElementById("episode-select");
 
-        // URL do servidor Flask via Ngrok
-        const serverUrl = "http://192.168.15.37:5000/videos/";
+        // ⚠️ Altere esse IP pelo IP local da sua máquina na rede
+        const serverUrl = "https://192.168.15.37:5000/videos/";
 
-        const playlist = Array.from({ length: 27 }, (_, i) => ({
+        const playlist = Array.from({ length: 26 }, (_, i) => ({
             src: `${i + 1}.mp4`,
             title: `Ep ${i + 1}`
         }));
@@ -84,7 +82,7 @@
             videoSource.src = videoUrl;
             videoTitle.textContent = playlist[index].title;
             episodeSelect.value = index;
-            video.load(); // apenas carrega, não toca automaticamente
+            video.load();
         }
 
         function nextVideo() {
@@ -113,7 +111,6 @@
             video.play();
         }
 
-        // Preenche o select com os episódios
         function populateSelect() {
             playlist.forEach((item, index) => {
                 const option = document.createElement("option");
@@ -124,7 +121,7 @@
         }
 
         populateSelect();
-        loadVideo(currentIndex); // apenas carrega o vídeo, não reproduz
+        loadVideo(currentIndex);
     </script>
 </body>
 </html>
