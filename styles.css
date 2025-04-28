@@ -3,14 +3,14 @@ body {
     color: #1C2B41;
     font-family: 'Poppins', 'Lato', Helvetica, sans-serif;
     text-align: center;
-    margin: 0%;
-    padding: 0%;
+    margin: 0;
+    padding: 0;
 }
 
 header {
     background-color: #1C2B41;
     color: #FFFFFF;
-    margin: 0%;
+    margin: 0;
     padding: 1% 2%;
 }
 
@@ -35,7 +35,8 @@ button:hover {
     justify-content: center;
     gap: 20px;
     padding: 20px;
-  }  
+    flex-wrap: wrap;
+}
 
 .card {
     background-color: #1C2B41;
@@ -65,6 +66,7 @@ button:hover {
     font-size: 1.25em;
     margin: 10px 0;
 }
+
 .card p {
     font-size: 1em;
     line-height: 1.4;
@@ -81,10 +83,46 @@ button:hover {
     justify-content: center;
     gap: 20px;
     padding: 20px;
+    flex-wrap: wrap;
 }
 
 footer {
     background-color: #A7A8AA;
     color: #1C2B41;
     padding: 2%;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #beneficios, #produtos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 80%;
+    }
+
+    button {
+        width: 80%;
+        padding: 12px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    header, #about-us, footer {
+        padding: 4%;
+    }
+
+    .card img {
+        height: 200px;
+    }
+
+    .card h2 {
+        font-size: 1.1em;
+    }
+
+    .card p {
+        font-size: 0.95em;
+    }
 }
