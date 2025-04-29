@@ -12,24 +12,49 @@
   <header>
     <h1>Construa o futuro com inteligência automatizada.</h1>
     <h2>O Projeto London entrega soluções digitais para empresas que pensam no amanhã.</h2>
-    <button id="cta" class="cta" onclick="saveFicha()">Comece Agora</button>
+    <button id="cta" class="cta">Comece Agora</button>
   </header>
+
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <button class="close-btn" id="closeModalBtn">&times;</button>
+      <h2>Formulário</h2>
+      <form>
+        <div class="form-group">
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" name="nome" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="cargo">Cargo:</label>
+          <input type="text" id="cargo" name="cargo" required>
+        </div>
+  
+        <button id="save" type="submit" style="padding: 10px 20px; background-color: #A7A8AA; color: #000; border: none; border-radius: 8px; cursor: pointer;" onclick="saveFicha()">Enviar</button>
+      </form>
+    </div>
+  </div>
 
   <section id="beneficios">
     <div class="card">
-      <img src="corporal.jpg" alt="beneficio-1">
+      <img src="beneficio-1.jpg" alt="beneficio-1">
       <h2>Rápido</h2>
       <p>Lorem ipsum dolor sit amet. Ut eaque assumenda ut voluptate iure ex ipsam consectetur eum ipsum voluptate! Rem voluptate dolore est cumque excepturi et dolor ipsum id voluptate voluptatem 33 mollitia accusamus et voluptas libero.</p>
     </div>
 
     <div class="card">
-      <img src="fogo.jpg" alt="beneficio-2">
+      <img src="beneficio-2.jpg" alt="beneficio-2">
       <h2>Seguro</h2>
       <p>Lorem ipsum dolor sit amet. Ut eaque assumenda ut voluptate iure ex ipsam consectetur eum ipsum voluptate! Rem voluptate dolore est cumque excepturi et dolor ipsum id voluptate voluptatem 33 mollitia accusamus et voluptas libero.</p>
     </div>
 
     <div class="card">
-      <img src="ar.jpg" alt="beneficio-3">
+      <img src="beneficio-3.jpg" alt="beneficio-3">
       <h2>Escalavel</h2>
       <p>Lorem ipsum dolor sit amet. Ut eaque assumenda ut voluptate iure ex ipsam consectetur eum ipsum voluptate! Rem voluptate dolore est cumque excepturi et dolor ipsum id voluptate voluptatem 33 mollitia accusamus et voluptas libero.</p>
     </div>
@@ -52,6 +77,8 @@
       <p>Lorem ipsum dolor sit amet. Ut eaque assumenda ut voluptate iure ex ipsam consectetur eum ipsum voluptate! Rem voluptate dolore est cumque excepturi et dolor ipsum id voluptate voluptatem 33 mollitia accusamus et voluptas libero.</p>
     </div>
   </section>
+
+  <button id="cta" class="cta">Comece Agora</button>
 
   <footer>2025 © Todos os direitos reservados. Projeto London</footer>
 
